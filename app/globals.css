@@ -2,26 +2,30 @@
 @tailwind components;
 @tailwind utilities;
 
+html,
+body,
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  height: 100%;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Scrollbar styling */
+.thin-scrollbar::-webkit-scrollbar {
+  width: 7px; /* Set the width of the scrollbar */
+  height: 7px; /* Set the height of the scrollbar (for horizontal scrollbars) */
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+.thin-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #9f9f9fdb; /* Color of the scrollbar thumb */
+  border-radius: 9999px; /* Maximum roundness for the scrollbar thumb */
+  
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+.thin-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: #7c7c7c; /* Darker color when hovered */
 }
+
+.thin-scrollbar::-webkit-scrollbar-track {
+  background-color: #f1f1f1; /* Background color of the track */
+  border-radius: 9999px; /* Maximum roundness for the track as well */
+}
+
