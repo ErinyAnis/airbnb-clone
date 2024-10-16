@@ -89,7 +89,11 @@ const LoginModal = () => {
         outline
         label="Continue with Google"
         icon={FcGoogle}
-        onClick={() => signIn("google")}
+        onClick={() => {
+          signIn("google", {
+            callbackUrl: "http://localhost:3000",
+          }).catch((err) => console.error("Google sign-in error: ", err));
+        }}
       />
       <Button
         outline
