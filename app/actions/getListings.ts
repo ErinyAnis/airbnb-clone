@@ -1,4 +1,5 @@
 import prisma from "@/app/libs/prismadb";
+import { Prisma } from "@prisma/client";
 
 export interface IListingsParams {
   userId?: string;
@@ -25,7 +26,7 @@ export default async function getListings(params: IListingsParams) {
     } = params;
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const query: any = {};
+    const query: Prisma.ListingWhereInput = {};
 
     if (userId) {
       query.userId = userId;
