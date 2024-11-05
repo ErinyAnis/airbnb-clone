@@ -19,7 +19,6 @@ export const authOptions: AuthOptions = {
       authorization: {
         params: {
           scope: "openid profile email",
-          redirect_uri: "https://escapenest.netlify.app/api/auth/callback/google", 
         },
       },
     }),
@@ -55,6 +54,7 @@ export const authOptions: AuthOptions = {
   ],
   pages: {
     signIn: "/",
+    error: "/app/error.tsx",
   },
   debug: process.env.NODE_ENV === "development",
   session: {
