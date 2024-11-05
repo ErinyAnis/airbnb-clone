@@ -1,12 +1,13 @@
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import NextAuth, { AuthOptions } from "next-auth";
+import NextAuth from "next-auth";
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcrypt";
-import prisma from "@/app/libs/prismadb"; // Adjust path if necessary
+import prisma from "@/app/libs/prismadb"; // Adjust if necessary
+import type { NextAuthOptions } from "next-auth"; // Import the correct types
 
-export const authOptions: AuthOptions = {
+const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   providers: [
     GithubProvider({
@@ -23,7 +24,7 @@ export const authOptions: AuthOptions = {
       },
     }),
     CredentialsProvider({
-      name: "credentials",
+      name: "Credentials",
       credentials: {
         email: { label: "Email", type: "text" },
         password: { label: "Password", type: "password" },
@@ -57,11 +58,11 @@ export const authOptions: AuthOptions = {
   },
   debug: process.env.NODE_ENV === "development",
   session: {
-    strategy: "jwt",
+    strategy: "jwt" as const, // Use 'as const' to specify that it is a literal type
   },
   secret: process.env.NEXTAUTH_SECRET,
 };
 
-// Wrap `NextAuth` with `authOptions` for compatibility with Next.js 13+ API routes
+// Export as Next.js Route Handler compatible with Next.js 13 app directory
 const handler = NextAuth(authOptions);
 export { handler as GET, handler as POST };
