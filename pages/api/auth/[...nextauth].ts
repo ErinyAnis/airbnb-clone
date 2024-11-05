@@ -19,6 +19,7 @@ export const authOptions: AuthOptions = {
       authorization: {
         params: {
           scope: "openid profile email",
+          redirect_uri: "https://escapenest.netlify.app/api/auth/callback/google", 
         },
       },
     }),
@@ -62,6 +63,4 @@ export const authOptions: AuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
 };
 
-console.log("Google Client ID:", process.env.GOOGLE_CLIENT_ID);
-console.log("Google Client Secret:", process.env.GOOGLE_CLIENT_SECRET);
 export default NextAuth(authOptions);
