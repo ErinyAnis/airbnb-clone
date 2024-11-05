@@ -7,7 +7,7 @@ import bcrypt from "bcrypt";
 import prisma from "@/app/libs/prismadb"; // Adjust if necessary
 import type { NextAuthOptions } from "next-auth"; // Import the correct types
 
-const authOptions: NextAuthOptions = {
+export const authOptions: NextAuthOptions = { // Make sure to export authOptions
   adapter: PrismaAdapter(prisma),
   providers: [
     GithubProvider({
@@ -58,7 +58,7 @@ const authOptions: NextAuthOptions = {
   },
   debug: process.env.NODE_ENV === "development",
   session: {
-    strategy: "jwt" as const, // Use 'as const' to specify that it is a literal type
+    strategy: "jwt" as const, // Ensure to keep this line
   },
   secret: process.env.NEXTAUTH_SECRET,
 };
