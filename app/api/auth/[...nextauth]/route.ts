@@ -56,8 +56,8 @@ export const authOptions: AuthOptions = {
     }),
   ],
   pages: {
-    signIn: "/auth/signin", // Adjust to your actual sign-in page
-    error: "/app/error", // Adjust to your actual error page
+    signIn: "/",
+    error: "/app/error.tsx",
   },
   debug: process.env.NODE_ENV === "development",
   session: {
@@ -72,4 +72,3 @@ const handler = NextAuth(authOptions);
 // Export the handler for both GET and POST requests
 export { handler as GET, handler as POST };
 
-// No need to export authOptions again here if it's already exported above
