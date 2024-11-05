@@ -4,7 +4,7 @@ import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcrypt";
-import prisma from "@/app/libs/prismadb";
+import prisma from "@/app/libs/prismadb"; // Adjust path if necessary
 
 export const authOptions: AuthOptions = {
   adapter: PrismaAdapter(prisma),
@@ -25,8 +25,8 @@ export const authOptions: AuthOptions = {
     CredentialsProvider({
       name: "credentials",
       credentials: {
-        email: { label: "email", type: "text" },
-        password: { label: "password", type: "password" },
+        email: { label: "Email", type: "text" },
+        password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) {
@@ -37,14 +37,13 @@ export const authOptions: AuthOptions = {
             email: credentials.email,
           },
         });
-        if (!user || !user?.hashedPassword) {
+        if (!user || !user.hashedPassword) {
           throw new Error("Invalid credentials");
         }
         const isCorrectPassword = await bcrypt.compare(
           credentials.password,
           user.hashedPassword
         );
-
         if (!isCorrectPassword) {
           throw new Error("Invalid credentials");
         }
@@ -54,7 +53,7 @@ export const authOptions: AuthOptions = {
   ],
   pages: {
     signIn: "/",
-    error: "/app/error.tsx",
+    error: "/app/error",
   },
   debug: process.env.NODE_ENV === "development",
   session: {
@@ -63,4 +62,6 @@ export const authOptions: AuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
 };
 
-export default NextAuth(authOptions);
+// Wrap `NextAuth` with `authOptions` for compatibility with Next.js 13+ API routes
+const handler = NextAuth(authOptions);
+export { handler as GET, handler as POST };
