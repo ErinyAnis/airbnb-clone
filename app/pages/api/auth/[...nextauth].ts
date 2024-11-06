@@ -1,14 +1,12 @@
-// app/api/auth/[...nextauth]/route.ts
-
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import NextAuth, { type AuthOptions } from "next-auth";
+import NextAuth, { AuthOptions } from "next-auth";
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcrypt";
-import prisma from "@/app/libs/prismadb"; // Ensure the path is correct
 
-// Declare authOptions only once
+import prisma from "@/app/libs/prismadb";
+
 export const authOptions: AuthOptions = {
   adapter: PrismaAdapter(prisma),
   providers: [
@@ -19,17 +17,12 @@ export const authOptions: AuthOptions = {
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID as string,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
-      authorization: {
-        params: {
-          scope: "openid profile email",
-        },
-      },
     }),
     CredentialsProvider({
-      name: "Credentials",
+      name: "credentials",
       credentials: {
-        email: { label: "Email", type: "text" },
-        password: { label: "Password", type: "password" },
+        email: { label: "email", type: "text" },
+        password: { label: "password", type: "password" },
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) {
@@ -56,8 +49,7 @@ export const authOptions: AuthOptions = {
     }),
   ],
   pages: {
-    signIn: "/",
-    error: "/app/error.tsx",
+    signIn: '/'
   },
   debug: process.env.NODE_ENV === "development",
   session: {
@@ -66,9 +58,4 @@ export const authOptions: AuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
 };
 
-// Create a handler for NextAuth
-const handler = NextAuth(authOptions);
-
-// Export the handler for both GET and POST requests
-export { handler as GET, handler as POST };
-
+export default NextAuth(authOptions);
