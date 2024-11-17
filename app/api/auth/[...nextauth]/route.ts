@@ -5,10 +5,10 @@ import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcrypt";
 
-import prisma from "@/app/libs/prismadb";
+import prisma from "@/app/lib/prismadb";
 
 export const authOptions: AuthOptions = {
-  adapter: PrismaAdapter(prisma),
+ adapter: PrismaAdapter(prisma),
   providers: [
     GithubProvider({
       clientId: process.env.GITHUB_ID as string,
@@ -47,9 +47,11 @@ export const authOptions: AuthOptions = {
         return user;
       },
     }),
+
   ],
   pages: {
-    signIn: '/'
+    signIn: '/',
+    error: '/auth/error',
   },
   debug: process.env.NODE_ENV === "development",
   session: {
@@ -58,4 +60,5 @@ export const authOptions: AuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
 };
 
-export default NextAuth(authOptions);
+const handler = NextAuth(authOptions);
+export { handler as GET, handler as POST };

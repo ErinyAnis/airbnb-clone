@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-import prisma from "@/app/libs/prismadb";
+import prisma from "@/app/lib/prismadb";
 import getCurrentUser from "@/app/actions/getCurrentUser";
 
 export async function POST(request: Request) {
@@ -23,12 +23,12 @@ export async function POST(request: Request) {
     price,
   } = body;
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    Object.keys(body).forEach((value: any) => {
-      if (!body[value]) {
-        NextResponse.error();
-      }
-    });
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  Object.keys(body).forEach((value: any) => {
+    if (!body[value]) {
+      NextResponse.error();
+    }
+  });
 
   const listing = await prisma.listing.create({
     data: {

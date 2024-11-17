@@ -9,7 +9,7 @@ interface AvatarProps {
 const Avatar: React.FC<AvatarProps> = ({ src }) => {
   return (
     <Image
-      className="rounded-full opacity-35"
+      className="rounded-full opacity-90"
       height="22"
       width="22"
       alt="Avatar"

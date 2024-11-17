@@ -11,7 +11,7 @@ import Input from "../inputs/Input";
 import toast from "react-hot-toast";
 import Button from "../Button";
 import { FcGoogle } from "react-icons/fc";
-import { AiFillGithub } from "react-icons/ai";
+// import { AiFillGithub } from "react-icons/ai";
 import { useRouter } from "next/navigation";
 
 const LoginModal = () => {
@@ -49,7 +49,7 @@ const LoginModal = () => {
       }
 
       if (callback?.error) {
-        console.error(callback.error); 
+        console.error(callback.error);
         toast.error(callback.error);
       }
     });
@@ -94,12 +94,12 @@ const LoginModal = () => {
           signIn("google");
         }}
       />
-      <Button
+      {/* <Button
         outline
         label="Continue with Github"
         icon={AiFillGithub}
         onClick={() => signIn("github")}
-      />
+      /> */}
       <div className="text-neutral-500 text-center mt-4 font-light">
         <div className="justify-center flex flex-row items-center gap-2">
           <div>First time using Airbnb?</div>

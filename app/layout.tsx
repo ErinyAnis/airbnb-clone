@@ -9,6 +9,7 @@ import LoginModal from "./components/modals/LoginModal";
 import getCurrentUser from "./actions/getCurrentUser";
 import RentModal from "./components/modals/RentModal";
 import SearchModal from "./components/modals/SearchModal";
+import Providers from "./components/Providers";
 
 // Load the font
 const font = Nunito({
@@ -43,7 +44,10 @@ export default async function RootLayout({
           <LoginModal />
           <Navbar currentUser={currentUser} />
         </ClientOnly>
-        <div className="pb-20 pt-28">{children}</div>
+
+        <div className="pb-20 pt-28">
+          <Providers>{children} </Providers>
+        </div>
       </body>
     </html>
   );
