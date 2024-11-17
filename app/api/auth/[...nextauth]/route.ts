@@ -1,5 +1,5 @@
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import NextAuth from "next-auth";
+import NextAuth, { type NextAuthOptions } from "next-auth";
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
@@ -7,7 +7,7 @@ import bcrypt from "bcrypt";
 
 import prisma from "@/app/lib/prismadb";
 
-const authOptions = {
+export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   providers: [
     GithubProvider({
@@ -33,7 +33,7 @@ const authOptions = {
             email: credentials.email,
           },
         });
-        if (!user || !user?.hashedPassword) {
+        if (!user || !user.hashedPassword) {
           throw new Error("Invalid credentials");
         }
         const isCorrectPassword = await bcrypt.compare(
@@ -59,6 +59,9 @@ const authOptions = {
   secret: process.env.NEXTAUTH_SECRET,
 };
 
+// Custom wrapper for NextAuth handler
 const handler = NextAuth(authOptions);
 
-export default handler;
+// Exporting GET and POST handlers for Next.js App Router compatibility
+export const GET = handler;
+export const POST = handler;
